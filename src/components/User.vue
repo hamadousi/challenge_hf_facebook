@@ -5,11 +5,32 @@
 			<p class="user_name">{{ name }}</p>
 		</div>
 		<div class="container">
-			Album
+			<br/>
+			<div v-show="autorisationPhoto">
+				<!--Affichage des albums-->
+				<div v-show="!isShowAlbum">
+					<div class="colAlbum">
+						<album  v-for="album in orderedAlbums"
+						        :key="album.id" 
+								:name="album.name"
+								:count="album.count"
+								:picture="album.cover_photo.picture"
+								v-on:showAlbum="getSelectAlbum(album.id,album.name)">
+						</album>
+					</div>
+					<div class="pagination" v-show="!isShowAlbum">
+						<a href="#" class="btn btn-primary" :disabled="previous" @click="getPreviousPage"> << </a>
+						Page: {{ nombrePage }}
+						<a  href="#" class="btn btn-primary" :disabled="next" @click="getNextPage"> >> </a>
+					</div>
+				</div>
+				<!--/Affichage des albums-->
+			</div>
 		</div>
 	</div>
 </template>
 <script>
+import Album from './Album.vue'
 
 export default {
 	name: 'User',
@@ -26,7 +47,7 @@ export default {
 		}
 	},
 	components: {
-		
+		Album
 	},
 	mounted: function () {
 		this.$nextTick(function () {
@@ -44,7 +65,7 @@ export default {
 		*/
 		getAlbums:function () {
 			let url = this.userId+'/albums';//Url pour recupere les album
-			let params = {fields: 'name,count,cover_photo{picture}'};
+			let params = {fields: 'name,count,cover_photo{picture}',limit:'2'};
 			let vue = this;
 			//Appel de l'api facebook
 			FB.api(url,params,function (reponse) {
@@ -126,8 +147,12 @@ export default {
 			this.next = paging.next ? false : true;
 			this.previous = paging.previous ? false : true;
 		}
+	},
+	computed: {
+		orderedAlbums: function () {
+			return _.sortBy(this.albums.data,['name']);
+		}
 	}
-
 }
 </script>
 
