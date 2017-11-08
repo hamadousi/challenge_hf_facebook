@@ -5,13 +5,18 @@
 				<button class="btn btn-primary" @click="login">Authentification</button>
 			</div>
 			<div v-else>
-				connecter
+				<user :user-id="user.id" 
+	            		:name="user.name"
+	            		:picture="user.picture.data.url"
+	            		:autorisation-photo="autorisationPhoto">
+	      </user>
 			</div>
 		</div>
 	</div>
 </template>
 
 <script>
+import User from './User.vue'
 export default {
 	name: 'Facebook',
 	data () {
@@ -20,6 +25,9 @@ export default {
 	      user: {},
 	      permission:''
 	    }
+	},
+	components: {
+		User
 	},
 	methods: {
 		/**
@@ -40,9 +48,7 @@ export default {
 		*/
 		statusChangeCallback: function (response) {
 	        if(response.status === 'connected'){
-	           this.connecter = true;
-	           this.getUser();
-
+	        	this.getUser();
 	        }
 	        else {
 	            this.connecter = false;
@@ -57,8 +63,10 @@ export default {
     	getUser: function () {
 	        let vue = this;
 		    FB.api('/me',{fields: 'id,name,picture,permissions'}, function (response) {
-		        vue.$set(vue,'user',response);
+		        //vue.$set(vue,'user',response);
+		        vue.user = response;
 		        vue.permissionPhoto(response.permissions.data);
+		        vue.connecter = true;
 		    });
     	},
     	/**
