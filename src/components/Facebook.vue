@@ -5,7 +5,7 @@
 				<button class="btn btn-primary" @click="login">Authentification</button>
 			</div>
 			<div v-else>
-				<user :user-id="user.id" 
+				<user   :user-id="user.id" 
 	            		:name="user.name"
 	            		:picture="user.picture.data.url"
 	            		:autorisation-photo="autorisationPhoto"
@@ -24,8 +24,7 @@ export default {
 	    return {
 	      connecter: false,
 	      user: {},
-	      permission:'',
-	      token: ''
+	      permission:''
 	    }
 	},
 	components: {
@@ -84,8 +83,13 @@ export default {
 	            }
 	        }
     	},
+    	/**
+    	* Fonction qui permet de deconnecter un utilisateur
+    	*
+    	*/
     	userDeconnexion: function () {
     		let vue = this;
+    		//Appel de API Facebook
     		FB.logout(function(response) {
 				vue.connecter = false;	    
 			});

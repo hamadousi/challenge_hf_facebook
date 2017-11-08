@@ -35,6 +35,11 @@
 				</div>
 				<!--/Affichage des photos d'un album-->
 			</div>
+			<!--Message a afficher si l'utilisateur n'accepte pas la condition de consulter ses photos-->
+			<div v-show="!autorisationPhoto">
+				<h3>Désolé, Nous ne somme pas autorisés à afficher vos albums!!!</h3>
+			</div>
+			<!--Message a afficher si l'utilisateur n'accepte pas la condition de consulter ses photos-->
 		</div>
 	</div>
 </template>
@@ -158,11 +163,21 @@ export default {
 			this.next = paging.next ? false : true;
 			this.previous = paging.previous ? false : true;
 		},
+		/**
+		* Fonction qui indique au composon parent
+		* de deconnecter l'utilisateur
+		*
+		*/
 		deconnexion: function () {
 			this.$emit('deconnexion');
 		}
 	},
 	computed: {
+		/**
+		* Fonction qui permet de trier les albums en fonction du name
+		*
+		*
+		*/
 		orderedAlbums: function () {
 			return _.sortBy(this.albums.data,['name']);
 		}

@@ -61,9 +61,18 @@ export default {
 			}
 		});
 	},
+	/**
+	* Fonction qui permet d'indiquer au composant parent, de reafficher les albums
+	*
+	*/
 	mesAlbums: function () {
 		this.$emit('mesAlbums')
 	},
+	/*
+	* Fonction qui permet d'ajouter ou de retirer une photo dans le tableau
+	* des photos(selectionner ou deselectionner ) a telecharger et a envoyer
+	*
+	*/
 	photoSelectedDeselected: function (sourcePhoto) {
 		//Si la photo a ete ajoute, on le supprime du tablaux(cas de deselection d'une photo)
 		if(this.uploadPhoto.includes(sourcePhoto)){

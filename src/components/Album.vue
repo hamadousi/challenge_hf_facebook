@@ -17,9 +17,21 @@
 			}
 		},
 		methods: {
+			/*
+			* Fonction qui permet d'indiquer au composant parent
+			* d'affiche les photos de l'album 
+			*
+			*/
 			getAlbum: function () {
 				this.$emit('showAlbum');
 			},
+			/**
+			* Fonction qui retour l'url background d'une image
+			* 
+			* @param string url
+			* 
+			* @return string background-image
+			*/
 			getUrlImage: function (url) {
 				return "background-image:url("+url+")";
 			}
