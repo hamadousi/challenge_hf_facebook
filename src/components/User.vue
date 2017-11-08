@@ -2,7 +2,11 @@
 	<div>
 		<div class="container">
 			<p class="user_img"> <img :src="picture"></p>
-			<p class="user_name">{{ name }}</p>
+			<div class="user_name">
+				{{ name }}
+				<br/>
+				<button class="btn btn-primary" @click="deconnexion">Déconnexion</button>
+			</div>
 		</div>
 		<div class="container">
 			<br/>
@@ -25,12 +29,18 @@
 					</div>
 				</div>
 				<!--/Affichage des albums-->
+				<!--Affichage des photos d'un album-->
+				<div v-if="isShowAlbum">
+					<show-album :id-album="idAlbumSelect" :name="nameAlbumSelect" v-on:mesAlbums="showAllAlbum"></show-album>
+				</div>
+				<!--/Affichage des photos d'un album-->
 			</div>
 		</div>
 	</div>
 </template>
 <script>
 import Album from './Album.vue'
+import ShowAlbum from './ShowAlbum.vue'
 
 export default {
 	name: 'User',
@@ -47,7 +57,8 @@ export default {
 		}
 	},
 	components: {
-		Album
+		Album,
+		ShowAlbum
 	},
 	mounted: function () {
 		this.$nextTick(function () {
@@ -146,6 +157,9 @@ export default {
 		isDesableNextPrevious: function (paging) {
 			this.next = paging.next ? false : true;
 			this.previous = paging.previous ? false : true;
+		},
+		deconnexion: function () {
+			this.$emit('deconnexion');
 		}
 	},
 	computed: {

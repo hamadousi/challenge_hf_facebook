@@ -8,7 +8,8 @@
 				<user :user-id="user.id" 
 	            		:name="user.name"
 	            		:picture="user.picture.data.url"
-	            		:autorisation-photo="autorisationPhoto">
+	            		:autorisation-photo="autorisationPhoto"
+	            		v-on:deconnexion="userDeconnexion">
 	      </user>
 			</div>
 		</div>
@@ -23,7 +24,8 @@ export default {
 	    return {
 	      connecter: false,
 	      user: {},
-	      permission:''
+	      permission:'',
+	      token: ''
 	    }
 	},
 	components: {
@@ -82,6 +84,12 @@ export default {
 	            }
 	        }
     	},
+    	userDeconnexion: function () {
+    		let vue = this;
+    		FB.logout(function(response) {
+				vue.connecter = false;	    
+			});
+    	}
 	},
 	computed: {
 		/**
