@@ -1,6 +1,11 @@
 import Vue from 'vue'
+
+import VueFire from 'vuefire'
 import App from './App.vue'
 
+
+//Pour firebase
+Vue.use(VueFire);
 //Le code de chargement du SDK de facebook
 (function(d, s, id){
      var js, fjs = d.getElementsByTagName(s)[0];

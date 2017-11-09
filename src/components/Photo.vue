@@ -1,7 +1,9 @@
 <template>
 	<div>
 		<div class="thumbnail " @click="selectPhoto">
-			<div  class="image" :style="getUrlImage(picture)"><img class="image_select" src="../assets/cocher.png" v-show="select"></div>
+			<div  class="image" :style="getUrlImage(picture)">
+				<img class="image_select" src="../assets/cocher.png" v-show="showImageCheck">
+			</div>
 		</div>
 	</div>
 </template>
@@ -9,7 +11,7 @@
 <script>
 	export default {
 		name: 'Photo',
-		props: ['picture'],
+		props: ['picture','endUpload'],
 		data () {
 			return {
 				select: false
@@ -34,6 +36,20 @@
 			*/
 			getUrlImage: function (url) {
 				return "background-image:url("+url+")";
+			}
+		},
+		computed: {
+			/**
+			* Fonction qui permet de monter l'image qui sert de case a coché
+			* lorsqu'on clic sur une image
+			*
+			*/
+			showImageCheck: function () {
+				if(this.endUpload && this.select){
+					this.select = false;
+					return this.select;
+				}
+				return this.select
 			}
 		}
 	}
